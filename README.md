@@ -1,7 +1,10 @@
-![chartext](https://user-images.githubusercontent.com/44880102/124286070-8f9e1000-db1c-11eb-8c83-75fba1469e9a.png)
-# hal_chars
-Linuxcnc hal wich can load a char as hal pin or parameter. Experimental
+![ddos](https://user-images.githubusercontent.com/44880102/124382974-1297a580-dc98-11eb-8880-60284c2c04fe.jpg)
 
-A hal experiment.
-For the code, see the release page.
+# hal_chars
+A Linuxcnc example to send or write "char array's" to a component or between two components.
+The implementation is based on hal_type_t port.
+
+
+
+
 
