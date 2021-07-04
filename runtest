@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# make clean
+# make all
+# make install
+
+# Path to linuxcnc dir.
+LINUXCNC_DIR="/home/user/Desktop/Linux-Embedded/linux-hal/hal-core"
+
+# Path to linuxcnc's rtlib. 
+LINUXCNC_RT_DIR="/home/user/Desktop/Linux-Embedded/linux-hal/hal-core/rtlib"
+
+# Path to c project dir.
+C_PROJECT_DIR="/home/user/Desktop/Linux-Embedded/linux-hal/hal-core/qt-projects/c-project"
+rm -rf $LINUXCNC_RT_DIR/port.so 					# Remove old files
+cp -rf $C_PROJECT_DIR/port.so $LINUXCNC_RT_DIR	# Copy new component .so file to rtlib
+
+# Let linux know where to search for extra shared library's.
+sudo ldconfig /home/user/Desktop/Linux-Embedded/linux-hal/hal-core/rtlib
+sudo ldconfig /home/user/Desktop/Linux-Embedded/linux-hal/hal-core/bin
+
+cd $LINUXCNC_DIR/scripts && . ./rip-environment
+	
+	# stop hal.
+	halcmd stop
+	
+	# Load rt component:
+	halcmd loadrt threads name1=base-thread fp1=0 period1=25000 name2=servo-thread period2=1000000
+
+	halcmd loadrt port
+	halcmd addf write servo-thread
+	halcmd addf read servo-thread
+	
+	halcmd sets signal 100
+
+ 	# start hal.
+ 	halcmd start
+
+ 	# Start hal programs to debug:
+	halmeter
+	#halshow
+	#halscope 
+	
+	# Unload rt components and clean up hal:
+	halrun -U
+
+
+
